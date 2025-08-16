@@ -67,7 +67,7 @@
                     }
                     catch (Exception ex)
                     {
-                        ConsoleHelper.WriteError(ex.Message);
+                        ConsoleHelper.WriteError(ex);
 
                         // if the debugger is attached, break.
                         if (Debugger.IsAttached)

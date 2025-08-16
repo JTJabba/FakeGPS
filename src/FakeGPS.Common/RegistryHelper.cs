@@ -20,14 +20,25 @@
         /// <param name="latLong">The <see cref="LatLong"/>.</param>
         public static void SetLatLong(LatLong latLong)
         {
+            if (latLong == null)
+            {
+                throw new ArgumentNullException(nameof(latLong));
+            }
+
             try
             {
                 var key = Registry.LocalMachine.OpenSubKey(Path, true);
+                
+                if (key == null)
+                {
+                    throw new InvalidOperationException($"Could not open registry key: HKLM\\{Path}. The registry key may not exist, or you may not have sufficient permissions to access it. Try running as Administrator.");
+                }
 
-                key.SetValue(LatitudeProperty, latLong.Latitude);
-                key.SetValue(LongitudeProperty, latLong.Longitude);
-
-                key.Close();
+                using (key)
+                {
+                    key.SetValue(LatitudeProperty, latLong.Latitude);
+                    key.SetValue(LongitudeProperty, latLong.Longitude);
+                }
             }
             catch (Exception ex)
             {
@@ -36,9 +47,8 @@
                     Debugger.Break();
                 }
 
-                // just re-throw for now
-                // potentially catch specific exceptions for better handling
-                throw ex;
+                // Add more context to the exception
+                throw new InvalidOperationException($"Failed to set GPS coordinates in registry. Path: HKLM\\{Path}", ex);
             }
         }
     }

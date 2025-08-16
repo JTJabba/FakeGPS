@@ -97,6 +97,31 @@
         }
 
         /// <summary>
+        /// Write a detailed Error with stack trace to the Console in Red then change the color back.
+        /// </summary>
+        /// <param name="ex">The exception</param>
+        public static void WriteError(Exception ex)
+        {
+            var color = Console.ForegroundColor;
+
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("ZOMG, we got this error:");
+            Console.WriteLine($"Exception Type: {ex.GetType().Name}");
+            Console.WriteLine($"Message: {ex.Message}");
+            Console.WriteLine($"Stack Trace:");
+            Console.WriteLine(ex.StackTrace);
+            
+            if (ex.InnerException != null)
+            {
+                Console.WriteLine($"Inner Exception: {ex.InnerException.GetType().Name}");
+                Console.WriteLine($"Inner Message: {ex.InnerException.Message}");
+            }
+            
+            Console.WriteLine("Send feedback plz!");
+            Console.ForegroundColor = color;
+        }
+
+        /// <summary>
         /// Write the Help file to the Console.
         /// </summary>
         public static void WriteHelp()
