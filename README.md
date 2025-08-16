@@ -32,7 +32,7 @@ Note that Test Mode may be incompatible with BitLocker and Secure Boot.
 * Confirm you want to install the unsigned driver
     * The driver may say it failed to start on first use, see issue #3
 
-Note the settings are currently stored in `HKLM\System\CurrentControlSet\Enum\ROOT\UNKNOWN\0000\Device Parameters\FakeGPS` but this will change, see issue #2
+Note the settings are automatically detected in the device registry path (commonly `HKLM\System\CurrentControlSet\Enum\ROOT\SENSOR\0000\Device Parameters\FakeGPS` or `HKLM\System\CurrentControlSet\Enum\ROOT\UNKNOWN\0000\Device Parameters\FakeGPS` depending on installation)
 
 ### Command Line Options
 
